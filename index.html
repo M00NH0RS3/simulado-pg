@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="image.png" type="image/png" />
+  <title>Simulado - Policiamento de Guarda</title>
+  <meta name="theme-color" content="#38bdf8" />
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("sw.js")
+        .then(() => console.log("Service Worker registrado"))
+        .catch((err) => console.error("SW erro:", err));
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #0b1222f2;
+      --muted: #94a3b8;
+      --text: #e5e7eb;
+      --accent: #38bdf8;
+      --ok: #16a34a;
+      --bad: #dc2626;
+      --border: #334155;
+    }
+
+    a:link{text-decoration: none;}
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 600px at 10% -10%,
+          rgba(56, 189, 248, 0.15),
+          transparent),
+        radial-gradient(1000px 600px at 120% 20%,
+          rgba(34, 197, 94, 0.12),
+          transparent),
+        var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+        "Helvetica Neue", Arial;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+
+    header {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0;
+    }
+
+    .card {
+      background: var(--card);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .panel {
+      padding: 16px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .chip {
+      background: #0b1328;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #0a1222;
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-weight: 700;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, #38bdf8, #34d399);
+      border-color: transparent;
+      color: #001018;
+    }
+
+    .q {
+      padding: 16px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .q-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .q-title {
+      font-weight: 700;
+    }
+
+    .q-body {
+      margin-top: 8px;
+    }
+
+    .alt {
+      display: block;
+      margin: 0.25rem 0;
+      padding: 0.35rem 0.6rem;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .alt input {
+      margin-right: 0.5rem;
+    }
+
+    .alt.sel {
+      border-color: #1f2937;
+      background: #0f1a33;
+    }
+
+    .status {
+      margin-top: 8px;
+      font-size: 0.95rem;
+    }
+
+    .status.ok {
+      color: var(--ok);
+    }
+
+    .status.bad {
+      color: var(--bad);
+    }
+
+    .ok-bg {
+      background: rgba(22, 163, 74, 0.12);
+      border: 1px solid rgba(22, 163, 74, 0.35);
+    }
+
+    .bad-bg {
+      background: rgba(220, 38, 38, 0.1);
+      border: 1px solid rgba(220, 38, 38, 0.35);
+    }
+
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin: 12px 0 0;
+    }
+
+    .footer {
+      margin: 24px 0 40px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    details {
+      background: #0b1328;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      margin: 12px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>📝 Simulado – PG (100 questões)</h1>
+      <div class="row">
+        <span id="score" class="chip">Acertos: 0/0</span>
+        <span id="aproveitamento" class="chip">Aproveitamento: 0%</span>
+      </div>
+    </header>
+
+    <section id="exam" class="card panel">
+      <div class="row" style="justify-content: space-between">
+        <strong>Marque suas respostas e clique em <em>Verificar Tudo</em> ao final
+          para obter o resultado.</strong>
+        <details>
+          <summary>Como funciona</summary>
+          <ul>
+            <li>
+              Responda as questões de múltipla escolha e as questões de
+              verdadeiro/falso.
+            </li>
+            <li>
+              Ao verificar, a questão fica
+              <b style="color: var(--ok)">verde</b> se correta,
+              <b style="color: var(--bad)">vermelha</b> se incorreta e mostra
+              a alternativa certa.
+            </li>
+            <li>Você pode <b>exportar</b> um CSV com resultados.</li>
+          </ul>
+        </details>
+        <div class="row">
+          <button id="btnReset" class="btn">Resetar</button>
+          <button id="btnExport" class="btn">Exportar CSV</button>
+          <a class="btn primary" href=".resumo.html">Resumo da Matéria</a>
+        </div>
+      </div>
+      <div id="lista"></div>
+      <button id="btnCheckAll" class="btn primary">Verificar Tudo</button>
+    </section>
+
+    <!-- <p class="footer">&copy; 2025 CFSd Hotel</p> -->
+  </div>
+
+  <script>
+    const questoes = [
+      {
+        n: 1,
+        enu: "Qual a carga-horária total da disciplina Policiamento de Guardas conforme o material?",
+        alts: ["10 h", "20 h", "30 h", "40 h"],
+        correta: "b"
+      },
+      {
+        n: 2,
+        enu: "O Plano de Defesa do Aquartelamento tem por finalidade garantir a padronização de comunicação entre militares no serviço de guarda.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 3,
+        enu: "Qual item NÃO está listado como equipamento essencial da guarda no material?",
+        alts: ["Colete balístico", "Cinto de guarnição completo", "Lanterna", "Drone pessoal do sentinela"],
+        correta: "d"
+      },
+      {
+        n: 4,
+        enu: "Quem coordena o turno de serviço, segundo a composição da guarda ABM?",
+        alts: ["Sentinela", "FunOf", "Oficial de dia", "Comandante da Guarda"],
+        correta: "c"
+      },
+      {
+        n: 5,
+        enu: "Pontos vulneráveis são locais que, pela sua construção/situação, são de fácil transposição.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 6,
+        enu: "Qual é um exemplo citado de ponto sensível?",
+        alts: ["Muro baixo", "Caixa d’água", "Portão lateral", "Grama do pátio"],
+        correta: "b"
+      },
+      {
+        n: 7,
+        enu: "A instrução à guarda deve contemplar cuidados com o armamento e utilização correta dos meios de comunicação.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 8,
+        enu: "Qual título técnico consta entre as referências do material?",
+        alts: [
+          "Manual Técnico-Profissional Nº 30401/2020 - Intervenção Policial",
+          "Código Penal Internacional (CPI)",
+          "Diretrizes da ONU para Guardas",
+          "Manual de Sobrevivência Urbana"
+        ],
+        correta: "a"
+      },
+      {
+        n: 9,
+        enu: "A ocultação busca proteger o policial contra projéteis.",
+        alts: ["V", "F"],
+        correta: "F"
+      },
+      {
+        n: 10,
+        enu: "Qual é a finalidade da busca pessoal?",
+        alts: [
+          "Provar inocência do civil",
+          "Procurar produtos do crime, objetos ilícitos ou indícios de delito",
+          "Executar mandado sempre",
+          "Testar equipamentos do policial"
+        ],
+        correta: "b"
+      },
+      {
+        n: 11,
+        enu: "O policiamento de guardas é uma atividade típica de segurança pública?",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 12,
+        enu: "Quem é responsável por elaborar o Plano de Defesa do Aquartelamento?",
+        alts: ["Sentinela", "Oficial de dia", "Comandante da unidade", "Praça mais antiga"],
+        correta: "c"
+      },
+      {
+        n: 13,
+        enu: "Os pontos vulneráveis devem ser mapeados previamente no PDA.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 14,
+        enu: "Qual destes é considerado um ponto vulnerável?",
+        alts: ["Guarita elevada", "Portão de acesso lateral", "Paiol de munições", "Refeitório"],
+        correta: "b"
+      },
+      {
+        n: 15,
+        enu: "Os pontos sensíveis são os que concentram recursos vitais ou de grande valor.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 16,
+        enu: "O serviço de guarda pode ser exercido sem uniforme em situações específicas.",
+        alts: ["V", "F"],
+        correta: "F"
+      },
+      {
+        n: 17,
+        enu: "Quem designa o comandante da guarda?",
+        alts: ["O próprio efetivo", "O comandante da unidade", "O oficial de dia", "O FunOf"],
+        correta: "b"
+      },
+      {
+        n: 18,
+        enu: "A lanterna é equipamento obrigatório para todos os serviços de guarda noturna.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 19,
+        enu: "Os cães de guarda podem ser empregados como reforço em aquartelamentos de grande porte.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 20,
+        enu: "A guarda tem como uma de suas finalidades prevenir distúrbios internos e externos.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 21,
+        enu: "O Oficial de Dia é a autoridade máxima do serviço de guarda durante o turno.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 22,
+        enu: "O que significa a sigla PDA no contexto da disciplina?",
+        alts: [
+          "Plano de Defesa do Aquartelamento",
+          "Procedimento de Defesa Armada",
+          "Programa de Defesa Avançada",
+          "Patrulha de Defesa Ativa"
+        ],
+        correta: "a"
+      },
+      {
+        n: 23,
+        enu: "O efetivo da guarda pode ser alterado de acordo com as necessidades e peculiaridades da unidade.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 24,
+        enu: "A função do sentinela é apenas administrativa.",
+        alts: ["V", "F"],
+        correta: "F"
+      },
+      {
+        n: 25,
+        enu: "O comandante da guarda é responsável por zelar pela disciplina do efetivo de serviço.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 26,
+        enu: "Qual destes NÃO é um dever do sentinela?",
+        alts: [
+          "Vigiar o seu posto",
+          "Permitir a entrada de pessoas sem autorização",
+          "Comunicar qualquer anormalidade",
+          "Obedecer às ordens do comandante da guarda"
+        ],
+        correta: "b"
+      },
+      {
+        n: 27,
+        enu: "O PDA deve ser revisado periodicamente.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 28,
+        enu: "Quem é responsável por fiscalizar a execução do PDA?",
+        alts: ["O FunOf", "O Comandante de Companhia", "O Oficial de Dia", "O sentinela mais antigo"],
+        correta: "c"
+      },
+      {
+        n: 29,
+        enu: "Os pontos vulneráveis e sensíveis devem estar claramente identificados no PDA.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 30,
+        enu: "É permitido ao militar de guarda abandonar o posto em caso de necessidade pessoal.",
+        alts: ["V", "F"],
+        correta: "F"
+      },
+      {
+        n: 31,
+        enu: "O serviço de guarda é atividade privativa das Forças Armadas.",
+        alts: ["V", "F"],
+        correta: "F"
+      },
+      {
+        n: 32,
+        enu: "Qual destes é um exemplo de ponto sensível?",
+        alts: ["Paiol de munições", "Muro externo", "Entrada lateral", "Estacionamento"],
+        correta: "a"
+      },
+      {
+        n: 33,
+        enu: "O PDA deve ser elaborado em consonância com a legislação vigente.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 34,
+        enu: "A comunicação na guarda deve ser feita preferencialmente por:",
+        alts: ["Rádio", "Telefone celular", "Bilhete escrito", "Aplicativo de mensagens"],
+        correta: "a"
+      },
+      {
+        n: 35,
+        enu: "A ocultação é qualquer barreira que impeça a visualização do militar.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 36,
+        enu: "A cobertura é qualquer barreira capaz de deter projéteis.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 37,
+        enu: "O militar deve sempre buscar a cobertura em situações de risco de confronto.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 38,
+        enu: "O cão de guarda pode substituir completamente o sentinela.",
+        alts: ["V", "F"],
+        correta: "F"
+      },
+      {
+        n: 39,
+        enu: "A revista em viaturas pode ser determinada pelo Oficial de Dia.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 40,
+        enu: "As rondas internas fazem parte da rotina da guarda.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 41,
+        enu: "O militar de guarda pode portar apenas armamento letal.",
+        alts: ["V", "F"],
+        correta: "F"
+      },
+      {
+        n: 42,
+        enu: "Os pontos sensíveis são alvos prioritários em caso de ataque.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 43,
+        enu: "É permitido fumar durante o serviço de guarda desde que não haja movimentação na área.",
+        alts: ["V", "F"],
+        correta: "F"
+      },
+      {
+        n: 44,
+        enu: "Qual destes é um dos objetivos do PDA?",
+        alts: [
+          "Garantir a normalidade administrativa",
+          "Substituir a escala de serviço",
+          "Organizar eventos cívicos",
+          "Regular a alimentação dos militares"
+        ],
+        correta: "a"
+      },
+      {
+        n: 45,
+        enu: "O uso do colete balístico é facultativo no serviço de guarda.",
+        alts: ["V", "F"],
+        correta: "F"
+      },
+      {
+        n: 46,
+        enu: "O comandante da guarda pode aplicar sanções disciplinares ao efetivo.",
+        alts: ["V", "F"],
+        correta: "F"
+      },
+      {
+        n: 47,
+        enu: "O Oficial de Dia responde diretamente ao comandante da unidade.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 48,
+        enu: "O PDA deve prever hipóteses de distúrbios civis nas proximidades do aquartelamento.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 49,
+        enu: "A instrução inicial da guarda deve ser realizada antes da assunção do serviço.",
+        alts: ["V", "F"],
+        correta: "V"
+      },
+      {
+        n: 50,
+        enu: "O militar de guarda pode se ausentar do posto mediante autorização do sentinela vizinho.",
+        alts: ["V", "F"],
+        correta: "F"
+      },
+      {
+        n: 51,
+        enu: "Durante o século XIX, a evolução tecnológica impactou diretamente o combate a incêndios. Qual invenção foi fundamental para a eficiência dos bombeiros?",
+        alts: ["Extintor portátil", "Telefone", "Hidrante público", "Máscara autônoma"],
+        correta: "c"
+      },
+      {
+        n: 52,
+        enu: "No Brasil, qual foi a principal motivação para a criação dos primeiros Corpos de Bombeiros?",
+        alts: ["Defesa contra ataques militares", "Prevenção de epidemias", "Controle de incêndios urbanos", "Saneamento básico"],
+        correta: "c"
+      },
+      {
+        n: 53,
+        enu: "Em 1856, Dom Pedro II criou oficialmente o Corpo de Bombeiros do Rio de Janeiro. Esse marco é considerado:",
+        alts: ["O início do serviço militarizado", "A primeira corporação organizada de combate a incêndios no Brasil", "O começo da utilização de veículos automotores", "A fundação das brigadas voluntárias"],
+        correta: "b"
+      },
+      {
+        n: 54,
+        enu: "Durante a República Velha, os Corpos de Bombeiros brasileiros eram subordinados a:",
+        alts: ["Ministérios estaduais", "Guarda Nacional", "Exército", "Polícia Militar"],
+        correta: "d"
+      },
+      {
+        n: 55,
+        enu: "Na década de 1930, com a Revolução de 1930, os Corpos de Bombeiros passaram a ser incorporados em sua maioria:",
+        alts: ["Ao Ministério da Saúde", "Às Polícias Militares dos Estados", "À Defesa Civil Nacional", "Ao Ministério da Justiça"],
+        correta: "b"
+      },
+      {
+        n: 56,
+        enu: "O Corpo de Bombeiros Militar de Minas Gerais foi criado oficialmente em:",
+        alts: ["1909", "1911", "1934", "1946"],
+        correta: "b"
+      },
+      {
+        n: 57,
+        enu: "Qual grande incêndio ocorrido em 1961 em Niterói influenciou mudanças na legislação de segurança contra incêndios?",
+        alts: ["Incêndio do edifício Andraus", "Incêndio do Gran Circus Norte-Americano", "Incêndio do Joelma", "Incêndio da Catedral de Niterói"],
+        correta: "b"
+      },
+      {
+        n: 58,
+        enu: "O incêndio do Edifício Joelma, em 1974, em São Paulo, resultou em:",
+        alts: ["Aumento da obrigatoriedade de brigadas de incêndio em empresas", "Criação do Dia Nacional do Bombeiro", "Extinção dos Corpos de Bombeiros Civis", "Mudança da cor dos uniformes de combate"],
+        correta: "a"
+      },
+      {
+        n: 59,
+        enu: "O Dia Nacional do Bombeiro, celebrado em 2 de julho, foi instituído em:",
+        alts: ["1954", "1966", "1980", "1990"],
+        correta: "b"
+      },
+      {
+        n: 60,
+        enu: "Durante os anos 1980, a função de Bombeiro Civil começou a ser reconhecida principalmente em:",
+        alts: ["Grandes indústrias", "Escolas", "Áreas rurais", "Igrejas"],
+        correta: "a"
+      },
+      {
+        n: 61,
+        enu: "O incêndio no edifício Andraus, em 1972, destacou a necessidade de:",
+        alts: ["Instalação de sprinklers", "Uso obrigatório de escadas pressurizadas", "Formação de brigadas de incêndio", "Criação do Corpo de Bombeiros Civil"],
+        correta: "c"
+      },
+      {
+        n: 62,
+        enu: "A profissionalização do Corpo de Bombeiros no Brasil foi consolidada principalmente a partir de:",
+        alts: ["1856", "1930", "1967", "1988"],
+        correta: "c"
+      },
+      {
+        n: 63,
+        enu: "Em Minas Gerais, os bombeiros inicialmente eram vinculados à:",
+        alts: ["Secretaria de Justiça", "Polícia Militar", "Secretaria de Saúde", "Defesa Civil"],
+        correta: "b"
+      },
+      {
+        n: 64,
+        enu: "O lema tradicional dos Corpos de Bombeiros Militares no Brasil é:",
+        alts: ["'Salvar, Proteger e Socorrer'", "'Vidas alheias, riquezas a salvar'", "'Disciplina e Coragem'", "'Servir e Proteger'"],
+        correta: "b"
+      },
+      {
+        n: 65,
+        enu: "Durante a Constituição de 1988, os Corpos de Bombeiros Militares foram definidos como:",
+        alts: ["Forças Auxiliares e Reserva do Exército", "Órgãos independentes da União", "Serviços de caráter exclusivamente civil", "Unidades de segurança privada"],
+        correta: "a"
+      },
+      {
+        n: 66,
+        enu: "O Decreto-Lei 667/1969 tratou da organização dos Corpos de Bombeiros Militares e das:",
+        alts: ["Forças Armadas", "Guardas Municipais", "Polícias Militares", "Brigadas Voluntárias"],
+        correta: "c"
+      },
+      {
+        n: 67,
+        enu: "Qual destas atribuições é típica dos Corpos de Bombeiros Militares segundo a Constituição?",
+        alts: ["Combate ao crime organizado", "Fiscalização de trânsito", "Prevenção e combate a incêndios", "Defesa do patrimônio público"],
+        correta: "c"
+      },
+      {
+        n: 68,
+        enu: "A criação da SENASP (Secretaria Nacional de Segurança Públicem 1997 impactou os bombeiros no sentido de:",
+        alts: ["Centralizar a gestão da corporação", "Coordenar políticas nacionais de segurança pública", "Militarizar ainda mais os Corpos de Bombeiros", "Extinguir os Corpos de Bombeiros Civis"],
+        correta: "b"
+      },
+      {
+        n: 69,
+        enu: "A primeira mulher a ingressar no Corpo de Bombeiros Militar de Minas Gerais foi em:",
+        alts: ["1988", "1992", "1996", "2000"],
+        correta: "c"
+      },
+      {
+        n: 70,
+        enu: "O Serviço de Atendimento Pré-Hospitalar (APH) foi incorporado pelos bombeiros brasileiros principalmente a partir da década de:",
+        alts: ["1960", "1970", "1980", "1990"],
+        correta: "d"
+      },
+      {
+        n: 71,
+        enu: "O incêndio da Boate Kiss, em 2013, resultou em mudanças na legislação sobre:",
+        alts: ["Treinamento de brigadistas", "Capacidade máxima em ambientes fechados", "Padronização dos uniformes", "Militarização dos Corpos de Bombeiros"],
+        correta: "b"
+      },
+      {
+        n: 72,
+        enu: "O uso do telefone como meio de acionamento rápido dos bombeiros começou a se consolidar no Brasil a partir de:",
+        alts: ["Final do século XIX", "Década de 1920", "Década de 1950", "Década de 1970"],
+        correta: "b"
+      },
+      {
+        n: 73,
+        enu: "Em Minas Gerais, o número de emergência 193 foi oficialmente implantado em:",
+        alts: ["1969", "1975", "1984", "1990"],
+        correta: "c"
+      },
+      {
+        n: 74,
+        enu: "O grande incêndio que destruiu parte da Serra do Cipó em 1994 reforçou a necessidade de:",
+        alts: ["Criação do IBAMA", "Brigadas especializadas em incêndios florestais", "Extinção do Corpo de Bombeiros Civil", "Implantação da SENASP"],
+        correta: "b"
+      },
+      {
+        n: 75,
+        enu: "O Código de Segurança Contra Incêndio e Pânico (COSCIP) de Minas Gerais foi instituído em:",
+        alts: ["1969", "1983", "1994", "2001"],
+        correta: "b"
+      },
+      {
+        n: 76,
+        enu: "O símbolo tradicional dos bombeiros, composto por machados cruzados, capacete e tochas, remete a:",
+        alts: ["Tradição medieval europeia", "Grécia Antiga", "Primeiros corpos de Roma", "França napoleônica"],
+        correta: "a"
+      },
+      {
+        n: 77,
+        enu: "A cor vermelha nos uniformes e viaturas dos bombeiros tem como significado:",
+        alts: ["Simbolizar o fogo e a coragem", "Tradição romana", "Influência francesa", "Todas as anteriores"],
+        correta: "d"
+      },
+      {
+        n: 78,
+        enu: "O surgimento das primeiras brigadas de incêndio civis organizadas no Brasil ocorreu em:",
+        alts: ["Indústrias na década de 1940", "Quartéis na década de 1920", "Escolas na década de 1950", "Hospitais na década de 1970"],
+        correta: "a"
+      },
+      {
+        n: 79,
+        enu: "A primeira legislação federal brasileira que tratou de prevenção contra incêndios em estabelecimentos foi criada em:",
+        alts: ["1925", "1944", "1960", "1977"],
+        correta: "b"
+      },
+      {
+        n: 80,
+        enu: "O serviço aéreo de combate a incêndios florestais no Brasil começou a ser utilizado de forma sistemática em:",
+        alts: ["1960", "1975", "1989", "2001"],
+        correta: "c"
+      },
+      {
+        n: 81,
+        enu: "A inserção de cães de busca e salvamento nos Corpos de Bombeiros brasileiros aconteceu principalmente a partir da década de:",
+        alts: ["1960", "1970", "1980", "1990"],
+        correta: "c"
+      },
+      {
+        n: 82,
+        enu: "Em Minas Gerais, a Escola de Bombeiros foi criada com a finalidade de:",
+        alts: ["Militarizar a corporação", "Formar e capacitar bombeiros militares", "Criar o serviço de defesa civil", "Atuar em ocorrências ambientais"],
+        correta: "b"
+      },
+      {
+        n: 83,
+        enu: "A introdução do helicóptero nos serviços do Corpo de Bombeiros Brasileiro ocorreu em:",
+        alts: ["1969", "1975", "1983", "1992"],
+        correta: "c"
+      },
+      {
+        n: 84,
+        enu: "Os incêndios florestais em Minas Gerais são combatidos em parceria com:",
+        alts: ["Polícia Federal", "IBAMA e órgãos ambientais", "Ministério da Saúde", "Guarda Civil"],
+        correta: "b"
+      },
+      {
+        n: 85,
+        enu: "O Projeto Bombeiro Mirim, presente em diversos estados, tem como objetivo principal:",
+        alts: ["Recrutar jovens para a carreira", "Desenvolver cidadania e prevenção", "Militarizar a educação básica", "Treinar brigadistas civis"],
+        correta: "b"
+      },
+      {
+        n: 86,
+        enu: "Em Minas Gerais, a Defesa Civil Estadual foi integrada ao Corpo de Bombeiros Militar em:",
+        alts: ["1975", "1988", "1994", "2001"],
+        correta: "d"
+      },
+      {
+        n: 87,
+        enu: "A profissionalização e padronização do APH no Brasil foi intensificada com a criação do:",
+        alts: ["SAMU", "IBAMA", "COSCIP", "SENASP"],
+        correta: "a"
+      },
+      {
+        n: 88,
+        enu: "O incêndio do Museu Nacional, em 2018, reforçou a importância da:",
+        alts: ["Criação de brigadas escolares", "Prevenção em patrimônios históricos", "Militarização da cultura", "Extinção do Corpo de Bombeiros Civil"],
+        correta: "b"
+      },
+      {
+        n: 89,
+        enu: "As atividades de mergulho e salvamento aquático começaram a ser desempenhadas pelo Corpo de Bombeiros Militar de MG em:",
+        alts: ["1969", "1978", "1984", "1990"],
+        correta: "b"
+      },
+      {
+        n: 90,
+        enu: "A padronização nacional dos números de emergência no Brasil ocorreu em:",
+        alts: ["1975", "1984", "1995", "2000"],
+        correta: "c"
+      },
+      {
+        n: 91,
+        enu: "O emblema internacional usado pelos bombeiros, conhecido como Cruz de Malta, teve origem em:",
+        alts: ["Ordem dos Cavaleiros de Malta", "Império Romano", "Revolução Francesa", "Inglaterra Vitoriana"],
+        correta: "a"
+      },
+      {
+        n: 92,
+        enu: "A participação do Corpo de Bombeiros de MG em missões humanitárias internacionais começou a partir de:",
+        alts: ["1988", "1994", "2005", "2010"],
+        correta: "c"
+      },
+      {
+        n: 93,
+        enu: "O regulamento disciplinar dos bombeiros militares é inspirado no:",
+        alts: ["Código Penal Comum", "Regulamento do Exército", "Constituição de 1988", "Lei de Segurança Nacional"],
+        correta: "b"
+      },
+      {
+        n: 94,
+        enu: "A Brigada de Incêndio é definida como:",
+        alts: ["Grupo civil voluntário", "Grupo de pessoas treinadas para prevenção e combate a princípios de incêndio", "Corpo de Bombeiros Militar", "Serviço exclusivo do Exército"],
+        correta: "b"
+      },
+      {
+        n: 95,
+        enu: "O termo 'bombeiro' tem origem na função de:",
+        alts: ["Bombear água", "Bombardear incêndios", "Bombear fumaça", "Bombear oxigênio"],
+        correta: "a"
+      },
+      {
+        n: 96,
+        enu: "O CBMMG possui como lema institucional:",
+        alts: ["'Salvar, Proteger, Socorrer'", "'Vidas alheias, riquezas a salvar'", "'Disciplina, Ordem, Coragem'", "'Segurança e Vida'"],
+        correta: "b"
+      },
+      {
+        n: 97,
+        enu: "A primeira legislação estadual mineira sobre segurança contra incêndios foi publicada em:",
+        alts: ["1934", "1946", "1969", "1983"],
+        correta: "d"
+      },
+      {
+        n: 98,
+        enu: "As viaturas de combate a incêndio, conhecidas como ABTs, significam:",
+        alts: ["Auto Bomba Tanque", "Auto Bomba Transporte", "Auto Blindado Tático", "Apoio Básico Técnico"],
+        correta: "a"
+      },
+      {
+        n: 99,
+        enu: "A atividade de resgate em altura, com uso de técnicas de corda, foi oficialmente incluída nas atribuições dos bombeiros a partir de:",
+        alts: ["Década de 1960", "Década de 1970", "Década de 1980", "Década de 1990"],
+        correta: "d"
+      },
+      {
+        n: 100,
+        enu: "O Corpo de Bombeiros Militar de Minas Gerais é considerado hoje:",
+        alts: ["Uma das instituições mais respeitadas do Estado", "Uma força auxiliar sem relevância social", "Um órgão apenas administrativo", "Um serviço civil voluntário"],
+        correta: "a"
+      }
+    ];
+
+    const lista = document.getElementById('lista');
+
+    function render() {
+      lista.innerHTML = '';
+      for (const q of questoes) {
+        const div = document.createElement('div');
+        div.className = 'q';
+        div.id = `q${q.n}`;
+        div.innerHTML = `
+                <div class="q-head">
+                  <div class="q-title"><span class="chip">${q.n}</span> ${q.enu}</div>
+                  <button class="btn" data-action="verificar">Verificar</button>
+
+                </div>
+                <div class="q-body" role="group" aria-label="Questão ${q.n}"></div>
+                <div class="status"></div>
+              `;
+
+        const body = div.querySelector('.q-body');
+        if (q.vf) {
+          ['V', 'F'].forEach(val => {
+            const label = document.createElement('label');
+            label.className = 'alt';
+            label.innerHTML = `<input type="radio" name="q${q.n}" value="${val}"> ${val}`;
+            body.appendChild(label);
+          });
+        } else {
+          const letras = ['a', 'b', 'c', 'd'];
+          q.alts.forEach((txt, idx) => {
+            const letra = letras[idx];
+            const label = document.createElement('label');
+            label.className = 'alt';
+            label.innerHTML = `<input type="radio" name="q${q.n}" value="${letra}"> (${letra}) ${txt}`;
+            body.appendChild(label);
+          });
+        }
+        lista.appendChild(div);
+      }
+
+      lista.addEventListener('change', e => {
+        const lab = e.target?.closest?.('.alt');
+        if (lab){
+          const group = lab.parentElement;
+          group.querySelectorAll('.alt').forEach(x => x.classList.remove('sel'));
+          lab.classList.add('sel');
+        }
+      });
+
+      lista.addEventListener('click', e => {
+        const btn = e.target.closest('button[data-action="verificar"]');
+        if (!btn) return;
+        const card = btn.closest('.q');
+        const n = Number(card.id.replace('q', ''));
+        verificar(n);
+        atualizarPlacar();
+      });
+    }
+
+    function verificar(n) {
+      const q = questoes.find(x => x.n === n);
+      const card = document.getElementById(`q${n}`);
+      const status = card.querySelector('.status');
+      const marcada = card.querySelector('input:checked');
+      card.classList.remove('ok-bg', 'bad-bg');
+      status.className = 'status';
+      if (!marcada){ status.textContent = 'Não respondida.'; return false; }
+      const val = marcada.value.toLowerCase();
+      const ok = (q.vf ? val.toUpperCase() : val) === q.correta;
+      if (ok) {
+        card.classList.add('ok-bg');
+        status.classList.add('ok');
+        status.textContent = '✔ Correto';
+      } else {
+        card.classList.add('bad-bg');
+        status.classList.add('bad');
+        if (q.vf) {
+          status.textContent = `✖ Incorreto. Correto: ${q.correta}`;
+        } else {
+          const letras = ['a', 'b', 'c', 'd'];
+          const idx = letras.indexOf(q.correta);
+          const textoCorreto = q.alts[idx];
+          status.textContent = `✖ Incorreto. Correto: (${q.correta}) ${textoCorreto}`;
+        }
+      }
+      return ok;
+    }
+
+    function verificarTudo() {
+      let withKey = 0, correct = 0;
+      for (const q of questoes) {
+        withKey++;
+        if (verificar(q.n)) correct++;
+      }
+      atualizarPlacar(correct, withKey);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function atualizarPlacar(forceCorrect, forceTotal) {
+      let total = forceTotal ?? questoes.length;
+      let correct = forceCorrect ?? Array.from(document.querySelectorAll('.status.ok')).length;
+      document.getElementById('score').textContent = `Acertos: ${correct}/${total}`;
+      const ap = total ? Math.round((correct / total) * 100) : 0;
+      document.getElementById('aproveitamento').textContent = `Aproveitamento: ${ap}%`;
+    }
+
+    function resetar() {
+      document.querySelectorAll('input[type="radio"]').forEach(i => i.checked = false);
+      document.querySelectorAll('.alt').forEach(l => l.classList.remove('sel'));
+      document.querySelectorAll('.q').forEach(c => c.classList.remove('ok-bg', 'bad-bg'));
+      document.querySelectorAll('.status').forEach(s => { s.className = 'status'; s.textContent = ''; });
+      atualizarPlacar(0, questoes.length);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function exportCSV() {
+      const linhas = [["#", "Enunciado", "Resposta", "Gabarito", "Resultado"]];
+      for (const q of questoes) {
+        const card = document.getElementById(`q${q.n}`);
+        const marcada = card.querySelector('input:checked');
+        let resp = marcada ? marcada.value.toUpperCase() : '';
+        let gab = q.vf ? q.correta : q.correta.toUpperCase();
+        let resultado = card.querySelector('.status').classList.contains('ok') ? 'Correto' : (marcada ? 'Incorreto' : 'Não respondida');
+        linhas.push([q.n, q.enu.replaceAll('\n', ' ').trim(), resp, gab, resultado]);
+      }
+      const csv = linhas.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'resultado_simulado_dh.csv'; a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
+    }
+
+    // Render e binds iniciais
+    render();
+    atualizarPlacar(0, questoes.length);
+
+    document.getElementById('btnCheckAll').addEventListener('click', verificarTudo);
+    document.getElementById('btnReset').addEventListener('click', resetar);
+    document.getElementById('btnExport').addEventListener('click', exportCSV);
+  </script>
+</body>
+
+</html>
