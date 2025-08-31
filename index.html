@@ -30,7 +30,9 @@
       --border: #334155;
     }
 
-    a:link{text-decoration: none;}
+    a:link {
+      text-decoration: none;
+    }
 
     * {
       box-sizing: border-box;
@@ -239,7 +241,7 @@
         <div class="row">
           <button id="btnReset" class="btn">Resetar</button>
           <button id="btnExport" class="btn">Exportar CSV</button>
-          <a class="btn primary" href="resumo.html">Resumo da Matéria</a>
+          <a class="btn primary" href=".resumo.html">Resumo da Matéria</a>
         </div>
       </div>
       <div id="lista"></div>
@@ -251,631 +253,148 @@
 
   <script>
     const questoes = [
-      {
-        n: 1,
-        enu: "Qual a carga-horária total da disciplina Policiamento de Guardas conforme o material?",
-        alts: ["10 h", "20 h", "30 h", "40 h"],
-        correta: "b"
-      },
-      {
-        n: 2,
-        enu: "O Plano de Defesa do Aquartelamento tem por finalidade garantir a padronização de comunicação entre militares no serviço de guarda.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 3,
-        enu: "Qual item NÃO está listado como equipamento essencial da guarda no material?",
-        alts: ["Colete balístico", "Cinto de guarnição completo", "Lanterna", "Drone pessoal do sentinela"],
-        correta: "d"
-      },
-      {
-        n: 4,
-        enu: "Quem coordena o turno de serviço, segundo a composição da guarda ABM?",
-        alts: ["Sentinela", "FunOf", "Oficial de dia", "Comandante da Guarda"],
-        correta: "c"
-      },
-      {
-        n: 5,
-        enu: "Pontos vulneráveis são locais que, pela sua construção/situação, são de fácil transposição.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 6,
-        enu: "Qual é um exemplo citado de ponto sensível?",
-        alts: ["Muro baixo", "Caixa d’água", "Portão lateral", "Grama do pátio"],
-        correta: "b"
-      },
-      {
-        n: 7,
-        enu: "A instrução à guarda deve contemplar cuidados com o armamento e utilização correta dos meios de comunicação.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 8,
-        enu: "Qual título técnico consta entre as referências do material?",
-        alts: [
-          "Manual Técnico-Profissional Nº 30401/2020 - Intervenção Policial",
-          "Código Penal Internacional (CPI)",
-          "Diretrizes da ONU para Guardas",
-          "Manual de Sobrevivência Urbana"
-        ],
-        correta: "a"
-      },
-      {
-        n: 9,
-        enu: "A ocultação busca proteger o policial contra projéteis.",
-        alts: ["V", "F"],
-        correta: "F"
-      },
-      {
-        n: 10,
-        enu: "Qual é a finalidade da busca pessoal?",
-        alts: [
-          "Provar inocência do civil",
-          "Procurar produtos do crime, objetos ilícitos ou indícios de delito",
-          "Executar mandado sempre",
-          "Testar equipamentos do policial"
-        ],
-        correta: "b"
-      },
-      {
-        n: 11,
-        enu: "O policiamento de guardas é uma atividade típica de segurança pública?",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 12,
-        enu: "Quem é responsável por elaborar o Plano de Defesa do Aquartelamento?",
-        alts: ["Sentinela", "Oficial de dia", "Comandante da unidade", "Praça mais antiga"],
-        correta: "c"
-      },
-      {
-        n: 13,
-        enu: "Os pontos vulneráveis devem ser mapeados previamente no PDA.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 14,
-        enu: "Qual destes é considerado um ponto vulnerável?",
-        alts: ["Guarita elevada", "Portão de acesso lateral", "Paiol de munições", "Refeitório"],
-        correta: "b"
-      },
-      {
-        n: 15,
-        enu: "Os pontos sensíveis são os que concentram recursos vitais ou de grande valor.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 16,
-        enu: "O serviço de guarda pode ser exercido sem uniforme em situações específicas.",
-        alts: ["V", "F"],
-        correta: "F"
-      },
-      {
-        n: 17,
-        enu: "Quem designa o comandante da guarda?",
-        alts: ["O próprio efetivo", "O comandante da unidade", "O oficial de dia", "O FunOf"],
-        correta: "b"
-      },
-      {
-        n: 18,
-        enu: "A lanterna é equipamento obrigatório para todos os serviços de guarda noturna.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 19,
-        enu: "Os cães de guarda podem ser empregados como reforço em aquartelamentos de grande porte.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 20,
-        enu: "A guarda tem como uma de suas finalidades prevenir distúrbios internos e externos.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 21,
-        enu: "O Oficial de Dia é a autoridade máxima do serviço de guarda durante o turno.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 22,
-        enu: "O que significa a sigla PDA no contexto da disciplina?",
-        alts: [
-          "Plano de Defesa do Aquartelamento",
-          "Procedimento de Defesa Armada",
-          "Programa de Defesa Avançada",
-          "Patrulha de Defesa Ativa"
-        ],
-        correta: "a"
-      },
-      {
-        n: 23,
-        enu: "O efetivo da guarda pode ser alterado de acordo com as necessidades e peculiaridades da unidade.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 24,
-        enu: "A função do sentinela é apenas administrativa.",
-        alts: ["V", "F"],
-        correta: "F"
-      },
-      {
-        n: 25,
-        enu: "O comandante da guarda é responsável por zelar pela disciplina do efetivo de serviço.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 26,
-        enu: "Qual destes NÃO é um dever do sentinela?",
-        alts: [
-          "Vigiar o seu posto",
-          "Permitir a entrada de pessoas sem autorização",
-          "Comunicar qualquer anormalidade",
-          "Obedecer às ordens do comandante da guarda"
-        ],
-        correta: "b"
-      },
-      {
-        n: 27,
-        enu: "O PDA deve ser revisado periodicamente.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 28,
-        enu: "Quem é responsável por fiscalizar a execução do PDA?",
-        alts: ["O FunOf", "O Comandante de Companhia", "O Oficial de Dia", "O sentinela mais antigo"],
-        correta: "c"
-      },
-      {
-        n: 29,
-        enu: "Os pontos vulneráveis e sensíveis devem estar claramente identificados no PDA.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 30,
-        enu: "É permitido ao militar de guarda abandonar o posto em caso de necessidade pessoal.",
-        alts: ["V", "F"],
-        correta: "F"
-      },
-      {
-        n: 31,
-        enu: "O serviço de guarda é atividade privativa das Forças Armadas.",
-        alts: ["V", "F"],
-        correta: "F"
-      },
-      {
-        n: 32,
-        enu: "Qual destes é um exemplo de ponto sensível?",
-        alts: ["Paiol de munições", "Muro externo", "Entrada lateral", "Estacionamento"],
-        correta: "a"
-      },
-      {
-        n: 33,
-        enu: "O PDA deve ser elaborado em consonância com a legislação vigente.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 34,
-        enu: "A comunicação na guarda deve ser feita preferencialmente por:",
-        alts: ["Rádio", "Telefone celular", "Bilhete escrito", "Aplicativo de mensagens"],
-        correta: "a"
-      },
-      {
-        n: 35,
-        enu: "A ocultação é qualquer barreira que impeça a visualização do militar.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 36,
-        enu: "A cobertura é qualquer barreira capaz de deter projéteis.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 37,
-        enu: "O militar deve sempre buscar a cobertura em situações de risco de confronto.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 38,
-        enu: "O cão de guarda pode substituir completamente o sentinela.",
-        alts: ["V", "F"],
-        correta: "F"
-      },
-      {
-        n: 39,
-        enu: "A revista em viaturas pode ser determinada pelo Oficial de Dia.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 40,
-        enu: "As rondas internas fazem parte da rotina da guarda.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 41,
-        enu: "O militar de guarda pode portar apenas armamento letal.",
-        alts: ["V", "F"],
-        correta: "F"
-      },
-      {
-        n: 42,
-        enu: "Os pontos sensíveis são alvos prioritários em caso de ataque.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 43,
-        enu: "É permitido fumar durante o serviço de guarda desde que não haja movimentação na área.",
-        alts: ["V", "F"],
-        correta: "F"
-      },
-      {
-        n: 44,
-        enu: "Qual destes é um dos objetivos do PDA?",
-        alts: [
-          "Garantir a normalidade administrativa",
-          "Substituir a escala de serviço",
-          "Organizar eventos cívicos",
-          "Regular a alimentação dos militares"
-        ],
-        correta: "a"
-      },
-      {
-        n: 45,
-        enu: "O uso do colete balístico é facultativo no serviço de guarda.",
-        alts: ["V", "F"],
-        correta: "F"
-      },
-      {
-        n: 46,
-        enu: "O comandante da guarda pode aplicar sanções disciplinares ao efetivo.",
-        alts: ["V", "F"],
-        correta: "F"
-      },
-      {
-        n: 47,
-        enu: "O Oficial de Dia responde diretamente ao comandante da unidade.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 48,
-        enu: "O PDA deve prever hipóteses de distúrbios civis nas proximidades do aquartelamento.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 49,
-        enu: "A instrução inicial da guarda deve ser realizada antes da assunção do serviço.",
-        alts: ["V", "F"],
-        correta: "V"
-      },
-      {
-        n: 50,
-        enu: "O militar de guarda pode se ausentar do posto mediante autorização do sentinela vizinho.",
-        alts: ["V", "F"],
-        correta: "F"
-      },
-      {
-        n: 51,
-        enu: "Durante o século XIX, a evolução tecnológica impactou diretamente o combate a incêndios. Qual invenção foi fundamental para a eficiência dos bombeiros?",
-        alts: ["Extintor portátil", "Telefone", "Hidrante público", "Máscara autônoma"],
-        correta: "c"
-      },
-      {
-        n: 52,
-        enu: "No Brasil, qual foi a principal motivação para a criação dos primeiros Corpos de Bombeiros?",
-        alts: ["Defesa contra ataques militares", "Prevenção de epidemias", "Controle de incêndios urbanos", "Saneamento básico"],
-        correta: "c"
-      },
-      {
-        n: 53,
-        enu: "Em 1856, Dom Pedro II criou oficialmente o Corpo de Bombeiros do Rio de Janeiro. Esse marco é considerado:",
-        alts: ["O início do serviço militarizado", "A primeira corporação organizada de combate a incêndios no Brasil", "O começo da utilização de veículos automotores", "A fundação das brigadas voluntárias"],
-        correta: "b"
-      },
-      {
-        n: 54,
-        enu: "Durante a República Velha, os Corpos de Bombeiros brasileiros eram subordinados a:",
-        alts: ["Ministérios estaduais", "Guarda Nacional", "Exército", "Polícia Militar"],
-        correta: "d"
-      },
-      {
-        n: 55,
-        enu: "Na década de 1930, com a Revolução de 1930, os Corpos de Bombeiros passaram a ser incorporados em sua maioria:",
-        alts: ["Ao Ministério da Saúde", "Às Polícias Militares dos Estados", "À Defesa Civil Nacional", "Ao Ministério da Justiça"],
-        correta: "b"
-      },
-      {
-        n: 56,
-        enu: "O Corpo de Bombeiros Militar de Minas Gerais foi criado oficialmente em:",
-        alts: ["1909", "1911", "1934", "1946"],
-        correta: "b"
-      },
-      {
-        n: 57,
-        enu: "Qual grande incêndio ocorrido em 1961 em Niterói influenciou mudanças na legislação de segurança contra incêndios?",
-        alts: ["Incêndio do edifício Andraus", "Incêndio do Gran Circus Norte-Americano", "Incêndio do Joelma", "Incêndio da Catedral de Niterói"],
-        correta: "b"
-      },
-      {
-        n: 58,
-        enu: "O incêndio do Edifício Joelma, em 1974, em São Paulo, resultou em:",
-        alts: ["Aumento da obrigatoriedade de brigadas de incêndio em empresas", "Criação do Dia Nacional do Bombeiro", "Extinção dos Corpos de Bombeiros Civis", "Mudança da cor dos uniformes de combate"],
-        correta: "a"
-      },
-      {
-        n: 59,
-        enu: "O Dia Nacional do Bombeiro, celebrado em 2 de julho, foi instituído em:",
-        alts: ["1954", "1966", "1980", "1990"],
-        correta: "b"
-      },
-      {
-        n: 60,
-        enu: "Durante os anos 1980, a função de Bombeiro Civil começou a ser reconhecida principalmente em:",
-        alts: ["Grandes indústrias", "Escolas", "Áreas rurais", "Igrejas"],
-        correta: "a"
-      },
-      {
-        n: 61,
-        enu: "O incêndio no edifício Andraus, em 1972, destacou a necessidade de:",
-        alts: ["Instalação de sprinklers", "Uso obrigatório de escadas pressurizadas", "Formação de brigadas de incêndio", "Criação do Corpo de Bombeiros Civil"],
-        correta: "c"
-      },
-      {
-        n: 62,
-        enu: "A profissionalização do Corpo de Bombeiros no Brasil foi consolidada principalmente a partir de:",
-        alts: ["1856", "1930", "1967", "1988"],
-        correta: "c"
-      },
-      {
-        n: 63,
-        enu: "Em Minas Gerais, os bombeiros inicialmente eram vinculados à:",
-        alts: ["Secretaria de Justiça", "Polícia Militar", "Secretaria de Saúde", "Defesa Civil"],
-        correta: "b"
-      },
-      {
-        n: 64,
-        enu: "O lema tradicional dos Corpos de Bombeiros Militares no Brasil é:",
-        alts: ["'Salvar, Proteger e Socorrer'", "'Vidas alheias, riquezas a salvar'", "'Disciplina e Coragem'", "'Servir e Proteger'"],
-        correta: "b"
-      },
-      {
-        n: 65,
-        enu: "Durante a Constituição de 1988, os Corpos de Bombeiros Militares foram definidos como:",
-        alts: ["Forças Auxiliares e Reserva do Exército", "Órgãos independentes da União", "Serviços de caráter exclusivamente civil", "Unidades de segurança privada"],
-        correta: "a"
-      },
-      {
-        n: 66,
-        enu: "O Decreto-Lei 667/1969 tratou da organização dos Corpos de Bombeiros Militares e das:",
-        alts: ["Forças Armadas", "Guardas Municipais", "Polícias Militares", "Brigadas Voluntárias"],
-        correta: "c"
-      },
-      {
-        n: 67,
-        enu: "Qual destas atribuições é típica dos Corpos de Bombeiros Militares segundo a Constituição?",
-        alts: ["Combate ao crime organizado", "Fiscalização de trânsito", "Prevenção e combate a incêndios", "Defesa do patrimônio público"],
-        correta: "c"
-      },
-      {
-        n: 68,
-        enu: "A criação da SENASP (Secretaria Nacional de Segurança Públicem 1997 impactou os bombeiros no sentido de:",
-        alts: ["Centralizar a gestão da corporação", "Coordenar políticas nacionais de segurança pública", "Militarizar ainda mais os Corpos de Bombeiros", "Extinguir os Corpos de Bombeiros Civis"],
-        correta: "b"
-      },
-      {
-        n: 69,
-        enu: "A primeira mulher a ingressar no Corpo de Bombeiros Militar de Minas Gerais foi em:",
-        alts: ["1988", "1992", "1996", "2000"],
-        correta: "c"
-      },
-      {
-        n: 70,
-        enu: "O Serviço de Atendimento Pré-Hospitalar (APH) foi incorporado pelos bombeiros brasileiros principalmente a partir da década de:",
-        alts: ["1960", "1970", "1980", "1990"],
-        correta: "d"
-      },
-      {
-        n: 71,
-        enu: "O incêndio da Boate Kiss, em 2013, resultou em mudanças na legislação sobre:",
-        alts: ["Treinamento de brigadistas", "Capacidade máxima em ambientes fechados", "Padronização dos uniformes", "Militarização dos Corpos de Bombeiros"],
-        correta: "b"
-      },
-      {
-        n: 72,
-        enu: "O uso do telefone como meio de acionamento rápido dos bombeiros começou a se consolidar no Brasil a partir de:",
-        alts: ["Final do século XIX", "Década de 1920", "Década de 1950", "Década de 1970"],
-        correta: "b"
-      },
-      {
-        n: 73,
-        enu: "Em Minas Gerais, o número de emergência 193 foi oficialmente implantado em:",
-        alts: ["1969", "1975", "1984", "1990"],
-        correta: "c"
-      },
-      {
-        n: 74,
-        enu: "O grande incêndio que destruiu parte da Serra do Cipó em 1994 reforçou a necessidade de:",
-        alts: ["Criação do IBAMA", "Brigadas especializadas em incêndios florestais", "Extinção do Corpo de Bombeiros Civil", "Implantação da SENASP"],
-        correta: "b"
-      },
-      {
-        n: 75,
-        enu: "O Código de Segurança Contra Incêndio e Pânico (COSCIP) de Minas Gerais foi instituído em:",
-        alts: ["1969", "1983", "1994", "2001"],
-        correta: "b"
-      },
-      {
-        n: 76,
-        enu: "O símbolo tradicional dos bombeiros, composto por machados cruzados, capacete e tochas, remete a:",
-        alts: ["Tradição medieval europeia", "Grécia Antiga", "Primeiros corpos de Roma", "França napoleônica"],
-        correta: "a"
-      },
-      {
-        n: 77,
-        enu: "A cor vermelha nos uniformes e viaturas dos bombeiros tem como significado:",
-        alts: ["Simbolizar o fogo e a coragem", "Tradição romana", "Influência francesa", "Todas as anteriores"],
-        correta: "d"
-      },
-      {
-        n: 78,
-        enu: "O surgimento das primeiras brigadas de incêndio civis organizadas no Brasil ocorreu em:",
-        alts: ["Indústrias na década de 1940", "Quartéis na década de 1920", "Escolas na década de 1950", "Hospitais na década de 1970"],
-        correta: "a"
-      },
-      {
-        n: 79,
-        enu: "A primeira legislação federal brasileira que tratou de prevenção contra incêndios em estabelecimentos foi criada em:",
-        alts: ["1925", "1944", "1960", "1977"],
-        correta: "b"
-      },
-      {
-        n: 80,
-        enu: "O serviço aéreo de combate a incêndios florestais no Brasil começou a ser utilizado de forma sistemática em:",
-        alts: ["1960", "1975", "1989", "2001"],
-        correta: "c"
-      },
-      {
-        n: 81,
-        enu: "A inserção de cães de busca e salvamento nos Corpos de Bombeiros brasileiros aconteceu principalmente a partir da década de:",
-        alts: ["1960", "1970", "1980", "1990"],
-        correta: "c"
-      },
-      {
-        n: 82,
-        enu: "Em Minas Gerais, a Escola de Bombeiros foi criada com a finalidade de:",
-        alts: ["Militarizar a corporação", "Formar e capacitar bombeiros militares", "Criar o serviço de defesa civil", "Atuar em ocorrências ambientais"],
-        correta: "b"
-      },
-      {
-        n: 83,
-        enu: "A introdução do helicóptero nos serviços do Corpo de Bombeiros Brasileiro ocorreu em:",
-        alts: ["1969", "1975", "1983", "1992"],
-        correta: "c"
-      },
-      {
-        n: 84,
-        enu: "Os incêndios florestais em Minas Gerais são combatidos em parceria com:",
-        alts: ["Polícia Federal", "IBAMA e órgãos ambientais", "Ministério da Saúde", "Guarda Civil"],
-        correta: "b"
-      },
-      {
-        n: 85,
-        enu: "O Projeto Bombeiro Mirim, presente em diversos estados, tem como objetivo principal:",
-        alts: ["Recrutar jovens para a carreira", "Desenvolver cidadania e prevenção", "Militarizar a educação básica", "Treinar brigadistas civis"],
-        correta: "b"
-      },
-      {
-        n: 86,
-        enu: "Em Minas Gerais, a Defesa Civil Estadual foi integrada ao Corpo de Bombeiros Militar em:",
-        alts: ["1975", "1988", "1994", "2001"],
-        correta: "d"
-      },
-      {
-        n: 87,
-        enu: "A profissionalização e padronização do APH no Brasil foi intensificada com a criação do:",
-        alts: ["SAMU", "IBAMA", "COSCIP", "SENASP"],
-        correta: "a"
-      },
-      {
-        n: 88,
-        enu: "O incêndio do Museu Nacional, em 2018, reforçou a importância da:",
-        alts: ["Criação de brigadas escolares", "Prevenção em patrimônios históricos", "Militarização da cultura", "Extinção do Corpo de Bombeiros Civil"],
-        correta: "b"
-      },
-      {
-        n: 89,
-        enu: "As atividades de mergulho e salvamento aquático começaram a ser desempenhadas pelo Corpo de Bombeiros Militar de MG em:",
-        alts: ["1969", "1978", "1984", "1990"],
-        correta: "b"
-      },
-      {
-        n: 90,
-        enu: "A padronização nacional dos números de emergência no Brasil ocorreu em:",
-        alts: ["1975", "1984", "1995", "2000"],
-        correta: "c"
-      },
-      {
-        n: 91,
-        enu: "O emblema internacional usado pelos bombeiros, conhecido como Cruz de Malta, teve origem em:",
-        alts: ["Ordem dos Cavaleiros de Malta", "Império Romano", "Revolução Francesa", "Inglaterra Vitoriana"],
-        correta: "a"
-      },
-      {
-        n: 92,
-        enu: "A participação do Corpo de Bombeiros de MG em missões humanitárias internacionais começou a partir de:",
-        alts: ["1988", "1994", "2005", "2010"],
-        correta: "c"
-      },
-      {
-        n: 93,
-        enu: "O regulamento disciplinar dos bombeiros militares é inspirado no:",
-        alts: ["Código Penal Comum", "Regulamento do Exército", "Constituição de 1988", "Lei de Segurança Nacional"],
-        correta: "b"
-      },
-      {
-        n: 94,
-        enu: "A Brigada de Incêndio é definida como:",
-        alts: ["Grupo civil voluntário", "Grupo de pessoas treinadas para prevenção e combate a princípios de incêndio", "Corpo de Bombeiros Militar", "Serviço exclusivo do Exército"],
-        correta: "b"
-      },
-      {
-        n: 95,
-        enu: "O termo 'bombeiro' tem origem na função de:",
-        alts: ["Bombear água", "Bombardear incêndios", "Bombear fumaça", "Bombear oxigênio"],
-        correta: "a"
-      },
-      {
-        n: 96,
-        enu: "O CBMMG possui como lema institucional:",
-        alts: ["'Salvar, Proteger, Socorrer'", "'Vidas alheias, riquezas a salvar'", "'Disciplina, Ordem, Coragem'", "'Segurança e Vida'"],
-        correta: "b"
-      },
-      {
-        n: 97,
-        enu: "A primeira legislação estadual mineira sobre segurança contra incêndios foi publicada em:",
-        alts: ["1934", "1946", "1969", "1983"],
-        correta: "d"
-      },
-      {
-        n: 98,
-        enu: "As viaturas de combate a incêndio, conhecidas como ABTs, significam:",
-        alts: ["Auto Bomba Tanque", "Auto Bomba Transporte", "Auto Blindado Tático", "Apoio Básico Técnico"],
-        correta: "a"
-      },
-      {
-        n: 99,
-        enu: "A atividade de resgate em altura, com uso de técnicas de corda, foi oficialmente incluída nas atribuições dos bombeiros a partir de:",
-        alts: ["Década de 1960", "Década de 1970", "Década de 1980", "Década de 1990"],
-        correta: "d"
-      },
-      {
-        n: 100,
-        enu: "O Corpo de Bombeiros Militar de Minas Gerais é considerado hoje:",
-        alts: ["Uma das instituições mais respeitadas do Estado", "Uma força auxiliar sem relevância social", "Um órgão apenas administrativo", "Um serviço civil voluntário"],
-        correta: "a"
-      }
+      // --- BASE LEGAL ---
+      { n: 1, enu: "A segurança pública é dever do Estado, direito e responsabilidade de todos (CF/88).", vf: true, correta: "V" },
+      { n: 2, enu: "O Corpo de Bombeiros integra:", alts: ["As Forças Armadas", "Os órgãos de segurança pública", "O Poder Judiciário", "O SUS"], correta: "b" },
+      { n: 3, enu: "A Emenda Constitucional 39/99 aplica ao CBMMG:", alts: ["Legislação da Polícia Federal", "Legislação da PM enquanto não houver lei específica", "Legislação civil", "Nenhuma"], correta: "b" },
+      { n: 4, enu: "O art. 142 da Constituição Estadual trata das competências do CBMMG.", vf: true, correta: "V" },
+      { n: 5, enu: "A Resolução 152/2005 do CBMMG regulamenta:", alts: ["Emprego de alunos em guarda", "Uso de viaturas", "Escalas administrativas", "Cursos de formação"], correta: "a" },
+
+      // --- FUNÇÕES NA GUARDA ---
+      { n: 6, enu: "Função do Oficial de Dia:", alts: ["Apenas controlar entrada", "Executar rondas externas", "Coordenar toda a guarda", "Escalar o sentinela"], correta: "c" },
+      { n: 7, enu: "O sentinela é responsável por controlar entradas e saídas.", vf: true, correta: "V" },
+      { n: 8, enu: "O corpo da guarda possui acesso restrito.", vf: true, correta: "V" },
+      { n: 9, enu: "O Comandante da Guarda executa:", alts: ["Coordenação do Corpo da Guarda", "Escalas administrativas", "Apenas rondas externas", "Nada disso"], correta: "a" },
+      { n: 10, enu: "O plano de segurança da unidade define rotinas, atribuições e pontos críticos.", vf: true, correta: "V" },
+
+      // --- CONCEITOS ---
+      { n: 11, enu: "Exemplo de ponto sensível:", alts: ["Portão lateral", "Caixa d’água", "Muro baixo", "Arbusto"], correta: "b" },
+      { n: 12, enu: "Exemplo de ponto vulnerável:", alts: ["Janela com acesso à rua", "Gabinete do comando", "Transformador", "Intendência"], correta: "a" },
+      { n: 13, enu: "Abrigo protege contra projéteis; coberta apenas esconde.", vf: true, correta: "V" },
+      { n: 14, enu: "Arbusto é exemplo de abrigo.", vf: true, correta: "F" },
+      { n: 15, enu: "Guarita é exemplo de posto fixo, enquanto ronda perimetral é posto móvel.", vf: true, correta: "V" },
+
+      // --- PREPARO MENTAL ---
+      { n: 16, enu: "Estado de prontidão branco significa:", alts: ["Distração", "Atenção constante", "Confronto provável", "Pânico"], correta: "a" },
+      { n: 17, enu: "Estado amarelo é vigilância 360° e atenção constante.", vf: true, correta: "V" },
+      { n: 18, enu: "Estado laranja significa problema detectado, confronto provável.", vf: true, correta: "V" },
+      { n: 19, enu: "Estado vermelho = risco real, resposta necessária.", vf: true, correta: "V" },
+      { n: 20, enu: "Estado preto é desejável em ocorrências críticas.", vf: true, correta: "F" },
+
+      // --- PENSAMENTO TÁTICO ---
+      { n: 21, enu: "O quarteto do pensamento tático inclui área de segurança, área de risco, ponto de foco e ponto quente.", vf: true, correta: "V" },
+      { n: 22, enu: "Como primeiro interventor, deve-se sempre entrar na área de risco imediatamente.", vf: true, correta: "F" },
+      { n: 23, enu: "Risco = Vulnerabilidade × Ameaça.", vf: true, correta: "V" },
+      { n: 24, enu: "Supremacia de força pode ser obtida por:", alts: ["Surpresa e autocontrole", "Apenas quantidade de efetivo", "Exclusivamente armas de fogo", "Truculência"], correta: "a" },
+      { n: 25, enu: "Autoidentificação compõe a supremacia de força.", vf: true, correta: "V" },
+
+      // --- USO DA FORÇA / ALGEMAS ---
+      { n: 26, enu: "Nível primário do uso da força é:", alts: ["Verbalização e presença", "Uso letal", "Controle físico", "Algemamento"], correta: "a" },
+      { n: 27, enu: "Uso diferenciado da força é dinâmico, pode subir ou reduzir.", vf: true, correta: "V" },
+      { n: 28, enu: "SV 11 (STF): algemas só em caso de resistência, receio de fuga ou perigo à integridade.", vf: true, correta: "V" },
+      { n: 29, enu: "CPP art. 284: permite força ilimitada.", vf: true, correta: "F" },
+      { n: 30, enu: "Algemas devem ser travadas, ajustadas e acompanhadas de vigilância.", vf: true, correta: "V" },
+
+      // --- ABORDAGEM ---
+      { n: 31, enu: "Fundamentos da abordagem incluem: segurança, surpresa, rapidez, ação vigorosa e unidade de comando.", vf: true, correta: "V" },
+      { n: 32, enu: "Ação vigorosa significa truculência.", vf: true, correta: "F" },
+      { n: 33, enu: "Busca pessoal completa deve ocorrer em local isolado e com testemunha do mesmo sexo.", vf: true, correta: "V" },
+      { n: 34, enu: "Regra dos 21 pés (6,4m) refere-se a distância mínima em suspeito com faca.", vf: true, correta: "V" },
+      { n: 35, enu: "Posição guarda-baixa (arma a 45°) é ideal para deslocamento.", vf: true, correta: "V" },
+      { n: 36, enu: "Posição de pronta resposta só deve ser usada em risco letal real.", vf: true, correta: "V" },
+
+      // --- DESLOCAMENTO / VARREDURA ---
+      { n: 37, enu: "No deslocamento tático, posição normal é usada com arma no coldre.", vf: true, correta: "V" },
+      { n: 38, enu: "Fatiamento significa checar por segmentos o ambiente.", vf: true, correta: "V" },
+      { n: 39, enu: "Olhada rápida serve para ver sem ser visto.", vf: true, correta: "V" },
+      { n: 40, enu: "Reflexão de imagem pode ser usada em espelhos e superfícies.", vf: true, correta: "V" },
+
+      // --- TÁTICA TAT ---
+      { n: 41, enu: "TAT forma triângulo entre 2 PMs e o abordado.", vf: true, correta: "V" },
+      { n: 42, enu: "No TAT, distância entre PMs é de ~4m e do abordado ~3m.", vf: true, correta: "V" },
+      { n: 43, enu: "No TAT, há funções de Comandante, Verbalizador, Segurança e Revistador.", vf: true, correta: "V" },
+      { n: 44, enu: "Regra dos 21 pés não se aplica em TAT.", vf: true, correta: "F" },
+
+      // --- VEÍCULOS ---
+      { n: 45, enu: "Na abordagem de veículo, o posicionamento pode ser diagonal ou paralelo.", vf: true, correta: "V" },
+      { n: 46, enu: "Capacetes de motociclistas devem ser retirados imediatamente na abordagem.", vf: true, correta: "F" },
+      { n: 47, enu: "Na abordagem de moto, motor deve ser desligado e condutor desembarcar com mãos na cabeça.", vf: true, correta: "V" },
+
+      // --- EQUIPAMENTOS ---
+      { n: 48, enu: "Exemplo de equipamento essencial: colete balístico.", vf: true, correta: "V" },
+      { n: 49, enu: "A capa do colete deve conter informação de nível de proteção, sexo e tamanho.", vf: true, correta: "V" },
+      { n: 50, enu: "Lanterna, apito e comunicação fazem parte dos itens obrigatórios.", vf: true, correta: "V" },
+
+      // --- BASE LEGAL / PODER DE POLÍCIA ---
+      { n: 51, enu: "O poder de polícia da guarda deve sempre ser exercido sem violência desnecessária.", vf: true, correta: "V" },
+      { n: 52, enu: "A autoexecutoriedade é uma das características do poder de polícia.", vf: true, correta: "V" },
+      { n: 53, enu: "A coercibilidade significa que a ordem pode ser imposta mesmo contra a vontade do administrado.", vf: true, correta: "V" },
+      { n: 54, enu: "Discricionariedade, autoexecutoriedade e coercibilidade são características do poder de polícia.", vf: true, correta: "V" },
+      { n: 55, enu: "O plano de segurança da unidade deve estar afixado em local visível no Corpo da Guarda.", vf: true, correta: "V" },
+
+      // --- RESPONSABILIDADES ---
+      { n: 56, enu: "É atribuição do FunOf acompanhar de perto a execução do serviço da guarda.", vf: true, correta: "V" },
+      { n: 57, enu: "O Adjunto do FunOf apoia na execução das escalas e rotinas da guarda.", vf: true, correta: "V" },
+      { n: 58, enu: "O sentinela não precisa manter vigilância constante durante seu posto.", vf: true, correta: "F" },
+      { n: 59, enu: "Cabe ao Comandante da Guarda supervisionar diretamente os sentinelas.", vf: true, correta: "V" },
+      { n: 60, enu: "O Corpo da Guarda é local de livre acesso a qualquer militar da unidade.", vf: true, correta: "F" },
+
+      // --- ESTADOS DE PRONTIDÃO ---
+      { n: 61, enu: "Estado branco representa atenção máxima.", vf: true, correta: "F" },
+      { n: 62, enu: "Estado amarelo é considerado o estado ideal de vigilância cotidiana.", vf: true, correta: "V" },
+      { n: 63, enu: "Estado preto deve ser evitado com treinamento e gestão de estresse.", vf: true, correta: "V" },
+      { n: 64, enu: "O estado vermelho exige resposta imediata e proporcional.", vf: true, correta: "V" },
+      { n: 65, enu: "O estado laranja indica relaxamento completo.", vf: true, correta: "F" },
+
+      // --- SUPREMACIA DE FORÇA ---
+      { n: 66, enu: "Supremacia de força depende apenas do porte de armamento.", vf: true, correta: "F" },
+      { n: 67, enu: "Surpresa, distância e autocontrole ajudam a compensar eventual desvantagem numérica.", vf: true, correta: "V" },
+      { n: 68, enu: "Urbanidade e clareza no motivo da ação reforçam a autoridade da guarda.", vf: true, correta: "V" },
+      { n: 69, enu: "Supremacia de força pode ser tanto tática quanto dinâmica.", vf: true, correta: "V" },
+      { n: 70, enu: "Truculência é considerada forma adequada de manter supremacia de força.", vf: true, correta: "F" },
+
+      // --- USO DA FORÇA ---
+      { n: 71, enu: "Resistência passiva é quando o abordado se nega a cooperar sem reagir fisicamente.", vf: true, correta: "V" },
+      { n: 72, enu: "Resistência ativa letal justifica o emprego de força potencialmente letal.", vf: true, correta: "V" },
+      { n: 73, enu: "Uso progressivo da força significa aplicar sempre o nível mais alto disponível.", vf: true, correta: "F" },
+      { n: 74, enu: "A presença do militar já é forma de uso de força primário.", vf: true, correta: "V" },
+      { n: 75, enu: "Uso diferenciado da força deve sempre buscar legalidade, necessidade e proporcionalidade.", vf: true, correta: "V" },
+
+      // --- ALGEMAS ---
+      { n: 76, enu: "As algemas por si só garantem que o preso não fuja.", vf: true, correta: "F" },
+      { n: 77, enu: "É recomendável algemar o indivíduo com as mãos para trás e palmas para fora.", vf: true, correta: "V" },
+      { n: 78, enu: "Algemas devem sempre ser acompanhadas de vigilância do algemado.", vf: true, correta: "V" },
+      { n: 79, enu: "O art. 242 do CPPM prevê exceções ao uso de algemas.", vf: true, correta: "V" },
+      { n: 80, enu: "A Súmula Vinculante 11 obriga justificar por escrito o uso de algemas em situações excepcionais.", vf: true, correta: "V" },
+
+      // --- DESLOCAMENTO / ARMAS ---
+      { n: 81, enu: "No deslocamento rápido, arma deve permanecer no coldre.", vf: true, correta: "F" },
+      { n: 82, enu: "Na posição 2 (guarda-baixa), a arma fica a 45° com dedo fora do gatilho.", vf: true, correta: "V" },
+      { n: 83, enu: "Na posição 4 (pronta resposta), a arma fica apontada para o alvo com risco letal.", vf: true, correta: "V" },
+      { n: 84, enu: "A posição 1 significa arma já empunhada e apontada.", vf: true, correta: "F" },
+      { n: 85, enu: "Durante deslocamento tático, cada militar deve saber o que, quando e onde agir.", vf: true, correta: "V" },
+
+      // --- VARREDURA ---
+      { n: 86, enu: "Fatiamento, olhada rápida e reflexão de imagem são técnicas de varredura.", vf: true, correta: "V" },
+      { n: 87, enu: "Olhada rápida deve sempre expor o corpo inteiro do militar.", vf: true, correta: "F" },
+      { n: 88, enu: "Reflexão de imagem é recurso para observar sem se expor totalmente.", vf: true, correta: "V" },
+      { n: 89, enu: "A varredura deve considerar pontos de foco e pontos quentes.", vf: true, correta: "V" },
+      { n: 90, enu: "Varredura é desnecessária em ambientes controlados.", vf: true, correta: "F" },
+
+      // --- ABORDAGEM DE PESSOAS ---
+      { n: 91, enu: "Na abordagem, deve-se evitar posicionamento no 'V' dos braços do suspeito.", vf: true, correta: "V" },
+      { n: 92, enu: "No TAT, os PMs devem se manter alinhados frontalmente com o suspeito.", vf: true, correta: "F" },
+      { n: 93, enu: "A busca pessoal minuciosa pode ser feita em quatro posições: em pé, em pé com apoio, ajoelhado e deitado.", vf: true, correta: "V" },
+      { n: 94, enu: "Busca pessoal ligeira é usada em eventos e portarias.", vf: true, correta: "V" },
+      { n: 95, enu: "Busca completa pode envolver inspeção de cavidades corporais, com testemunha do mesmo sexo.", vf: true, correta: "V" },
+
+      // --- VEÍCULOS ---
+      { n: 96, enu: "Na abordagem de veículos, há áreas de contenção, segurança, risco, aproximação, alcance, busca e custódia.", vf: true, correta: "V" },
+      { n: 97, enu: "O posicionamento paralelo é uma das formas corretas de abordagem a veículos.", vf: true, correta: "V" },
+      { n: 98, enu: "Na abordagem de motocicletas, os capacetes devem ser mantidos no suspeito para limitar sua visão.", vf: true, correta: "V" },
+      { n: 99, enu: "O desembarque de motociclistas deve ser feito pela retaguarda e com mãos na cabeça.", vf: true, correta: "V" },
+      { n: 100, enu: "Abordagem de veículos não exige varredura visual prévia.", vf: true, correta: "F" }
+
     ];
 
     const lista = document.getElementById('lista');
@@ -919,7 +438,7 @@
 
       lista.addEventListener('change', e => {
         const lab = e.target?.closest?.('.alt');
-        if (lab){
+        if (lab) {
           const group = lab.parentElement;
           group.querySelectorAll('.alt').forEach(x => x.classList.remove('sel'));
           lab.classList.add('sel');
@@ -943,7 +462,7 @@
       const marcada = card.querySelector('input:checked');
       card.classList.remove('ok-bg', 'bad-bg');
       status.className = 'status';
-      if (!marcada){ status.textContent = 'Não respondida.'; return false; }
+      if (!marcada) { status.textContent = 'Não respondida.'; return false; }
       const val = marcada.value.toLowerCase();
       const ok = (q.vf ? val.toUpperCase() : val) === q.correta;
       if (ok) {
