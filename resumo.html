@@ -40,6 +40,28 @@
                   margin: 24px auto;
                   padding: 0 16px
             }
+            .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #0a1222;
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-weight: 700;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, #38bdf8, #34d399);
+      border-color: transparent;
+      color: #001018;
+    }
 
             header {
                   text-align: center;
