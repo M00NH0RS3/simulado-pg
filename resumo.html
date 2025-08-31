@@ -1,157 +1,212 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="image.png" type="image/png" />
-  <meta name="theme-color" content="#38bdf8">
-  <title>Resumo – Policiamento de Guardas</title>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="manifest" href="manifest.json">
+      <link rel="icon" href="image.png" type="image/png" />
+      <meta name="theme-color" content="#38bdf8">
+      <title>Resumo – Policiamento de Guardas</title>
 
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("sw.js")
-        .then(() => console.log("Service Worker registrado"))
-        .catch(err => console.error("SW erro:", err));
-    }
-  </script>
+      <script>
+            if ("serviceWorker" in navigator) {
+                  navigator.serviceWorker.register("sw.js")
+                        .then(() => console.log("Service Worker registrado"))
+                        .catch(err => console.error("SW erro:", err));
+            }
+      </script>
 
-  <style>
-    :root {
-      --bg:#0f172a; --card:#0b1222f2; --muted:#94a3b8; --text:#e5e7eb;
-      --accent:#38bdf8; --border:#334155;
-    }
-    body {
-      margin:0;
-      background:radial-gradient(1200px 600px at 10% -10%,rgba(56,189,248,.15),transparent),
-                 radial-gradient(1000px 600px at 120% 20%,rgba(34,197,94,.12),transparent),var(--bg);
-      color:var(--text);
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial
-    }
-    .container { max-width:1100px; margin:24px auto; padding:0 16px }
-    header { text-align:center; margin-bottom:16px }
-    header h1 { font-size:1.5rem; margin:0 }
-    .card {
-      background:var(--card);
-      backdrop-filter:blur(8px);
-      border:1px solid var(--border);
-      border-radius:16px;
-      box-shadow:0 10px 30px rgba(0,0,0,.35);
-      padding:16px; margin-bottom:20px;
-    }
-    h2 { color:var(--accent); margin-top:0 }
-    ul { margin:10px 0 10px 20px }
-    .highlight { font-weight:bold; color:var(--accent) }
-    .footer { margin:24px 0 40px; color:var(--muted); font-size:.9rem; text-align:center }
-  </style>
+      <style>
+            :root {
+                  --bg: #0f172a;
+                  --card: #0b1222f2;
+                  --muted: #94a3b8;
+                  --text: #e5e7eb;
+                  --accent: #38bdf8;
+                  --border: #334155;
+            }
+
+            body {
+                  margin: 0;
+                  background: radial-gradient(1200px 600px at 10% -10%, rgba(56, 189, 248, .15), transparent),
+                        radial-gradient(1000px 600px at 120% 20%, rgba(34, 197, 94, .12), transparent), var(--bg);
+                  color: var(--text);
+                  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial
+            }
+
+            .container {
+                  max-width: 1100px;
+                  margin: 24px auto;
+                  padding: 0 16px
+            }
+
+            header {
+                  text-align: center;
+                  margin-bottom: 16px
+            }
+
+            header h1 {
+                  font-size: 1.5rem;
+                  margin: 0
+            }
+
+            .card {
+                  background: var(--card);
+                  backdrop-filter: blur(8px);
+                  border: 1px solid var(--border);
+                  border-radius: 16px;
+                  box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+                  padding: 16px;
+                  margin-bottom: 20px;
+            }
+
+            h2 {
+                  color: var(--accent);
+                  margin-top: 0
+            }
+
+            ul {
+                  margin: 10px 0 10px 20px
+            }
+
+            .highlight {
+                  font-weight: bold;
+                  color: var(--accent)
+            }
+
+            .footer {
+                  margin: 24px 0 40px;
+                  color: var(--muted);
+                  font-size: .9rem;
+                  text-align: center
+            }
+      </style>
 </head>
+
 <body>
-  <div class="container">
-    <header>
-      <h1>📘 Resumo – Policiamento de Guardas (PG)</h1>
-    </header>
+      <div class="container">
+            <header>
+                  <h1>📘 Resumo – Policiamento de Guardas (PG)</h1>
+          <a class="btn primary" href="index.html">Simulado - PG</a>
 
-    <section class="card">
-      <h2>1) Base Legal</h2>
-      <ul>
-        <li><span class="highlight">CF/88, art. 144:</span> Segurança pública; CBMMG força auxiliar do Exército.</li>
-        <li><span class="highlight">Const. Estadual, art. 142:</span> Competências do CBMMG.</li>
-        <li><span class="highlight">Emenda Const. 39/99:</span> Aplicação da legislação da PM ao CBMMG.</li>
-        <li><span class="highlight">Resolução 152/2005:</span> Emprego de alunos em guarda.</li>
-        <li><span class="highlight">ITO 01/2002:</span> Guarda é responsabilidade de todos, plano de segurança rege rotinas.</li>
-        <li><span class="highlight">Poder de polícia:</span> Discricionariedade, autoexecutoriedade e coercibilidade.</li>
-      </ul>
-    </section>
+            </header>
 
-    <section class="card">
-      <h2>2) Composição da Guarda</h2>
-      <ul>
-        <li><span class="highlight">Oficial de Dia:</span> Coordena tudo.</li>
-        <li><span class="highlight">FunOf:</span> Acompanha serviço.</li>
-        <li><span class="highlight">Adjunto:</span> Apoio e escalas.</li>
-        <li><span class="highlight">Comandante da Guarda:</span> Opera a guarda e corpo da guarda.</li>
-        <li><span class="highlight">Sentinela:</span> Controle de entradas e segurança.</li>
-        <li><span class="highlight">Corpo da Guarda:</span> Acesso restrito, comunicações, alojamentos, armas/munições.</li>
-      </ul>
-    </section>
+            <section class="card">
+                  <h2>1) Base Legal</h2>
+                  <ul>
+                        <li><span class="highlight">CF/88, art. 144:</span> Segurança pública; CBMMG força auxiliar do
+                              Exército.</li>
+                        <li><span class="highlight">Const. Estadual, art. 142:</span> Competências do CBMMG.</li>
+                        <li><span class="highlight">Emenda Const. 39/99:</span> Aplicação da legislação da PM ao CBMMG.
+                        </li>
+                        <li><span class="highlight">Resolução 152/2005:</span> Emprego de alunos em guarda.</li>
+                        <li><span class="highlight">ITO 01/2002:</span> Guarda é responsabilidade de todos, plano de
+                              segurança rege rotinas.</li>
+                        <li><span class="highlight">Poder de polícia:</span> Discricionariedade, autoexecutoriedade e
+                              coercibilidade.</li>
+                  </ul>
+            </section>
 
-    <section class="card">
-      <h2>3) Conceitos Basilares</h2>
-      <ul>
-        <li><span class="highlight">Policiamento Ostensivo:</span> Guarda de aquartelamento e externa.</li>
-        <li><span class="highlight">Sentinela:</span> Vigia o posto.</li>
-        <li><span class="highlight">Plano de Segurança:</span> Rotina, equipamentos e pontos críticos.</li>
-        <li><span class="highlight">Pontos vulneráveis:</span> Locais de fácil transposição.</li>
-        <li><span class="highlight">Pontos sensíveis:</span> Partes vitais (caixa d’água, gabinete, ambulatório etc.).</li>
-        <li><span class="highlight">Ocultação x Proteção:</span> Ocultar ≠ proteger; abrigo protege contra projéteis.</li>
-      </ul>
-    </section>
+            <section class="card">
+                  <h2>2) Composição da Guarda</h2>
+                  <ul>
+                        <li><span class="highlight">Oficial de Dia:</span> Coordena tudo.</li>
+                        <li><span class="highlight">FunOf:</span> Acompanha serviço.</li>
+                        <li><span class="highlight">Adjunto:</span> Apoio e escalas.</li>
+                        <li><span class="highlight">Comandante da Guarda:</span> Opera a guarda e corpo da guarda.</li>
+                        <li><span class="highlight">Sentinela:</span> Controle de entradas e segurança.</li>
+                        <li><span class="highlight">Corpo da Guarda:</span> Acesso restrito, comunicações, alojamentos,
+                              armas/munições.</li>
+                  </ul>
+            </section>
 
-    <section class="card">
-      <h2>4) Preparo Mental e Pensamento Tático</h2>
-      <ul>
-        <li><span class="highlight">Estados de prontidão:</span> Branco, Amarelo, Laranja, Vermelho, Preto.</li>
-        <li><span class="highlight">Quarteto tático:</span> Área de segurança, área de risco, ponto de foco, ponto quente.</li>
-        <li><span class="highlight">Avaliação de risco:</span> R = V × A.</li>
-        <li><span class="highlight">Supremacia de força:</span> Efetivo, técnicas, equipamentos, autocontrole e proteção.</li>
-      </ul>
-    </section>
+            <section class="card">
+                  <h2>3) Conceitos Basilares</h2>
+                  <ul>
+                        <li><span class="highlight">Policiamento Ostensivo:</span> Guarda de aquartelamento e externa.
+                        </li>
+                        <li><span class="highlight">Sentinela:</span> Vigia o posto.</li>
+                        <li><span class="highlight">Plano de Segurança:</span> Rotina, equipamentos e pontos críticos.
+                        </li>
+                        <li><span class="highlight">Pontos vulneráveis:</span> Locais de fácil transposição.</li>
+                        <li><span class="highlight">Pontos sensíveis:</span> Partes vitais (caixa d’água, gabinete,
+                              ambulatório etc.).</li>
+                        <li><span class="highlight">Ocultação x Proteção:</span> Ocultar ≠ proteger; abrigo protege
+                              contra projéteis.</li>
+                  </ul>
+            </section>
 
-    <section class="card">
-      <h2>5) Equipamentos e Uso da Força</h2>
-      <ul>
-        <li><span class="highlight">Itens:</span> Arma, bastão/tonfa, colete, cinto, algemas, lanterna, rádio, CFTV.</li>
-        <li><span class="highlight">Algemas:</span> Preferência mãos para trás, ajustar, travar, vigilância.</li>
-        <li><span class="highlight">Uso diferenciado da força:</span>
-          <ul>
-            <li>Primário: presença + verbalização.</li>
-            <li>Secundário: controle físico, IMPO, uso dissuasivo.</li>
-            <li>Terciário: força letal.</li>
-          </ul>
-        </li>
-        <li><span class="highlight">Fundamentos da abordagem:</span> Segurança, surpresa, rapidez, ação vigorosa, unidade de comando.</li>
-      </ul>
-    </section>
+            <section class="card">
+                  <h2>4) Preparo Mental e Pensamento Tático</h2>
+                  <ul>
+                        <li><span class="highlight">Estados de prontidão:</span> Branco, Amarelo, Laranja, Vermelho,
+                              Preto.</li>
+                        <li><span class="highlight">Quarteto tático:</span> Área de segurança, área de risco, ponto de
+                              foco, ponto quente.</li>
+                        <li><span class="highlight">Avaliação de risco:</span> R = V × A.</li>
+                        <li><span class="highlight">Supremacia de força:</span> Efetivo, técnicas, equipamentos,
+                              autocontrole e proteção.</li>
+                  </ul>
+            </section>
 
-    <section class="card">
-      <h2>6) Técnicas e Táticas</h2>
-      <h3>Deslocamento</h3>
-      <ul><li>Lento, Normal, Rápido.</li></ul>
-      <h3>Posturas de arma</h3>
-      <ul>
-        <li>Posição 1: arma localizada.</li>
-        <li>Posição 2: guarda-baixa.</li>
-        <li>Posição 3: guarda-alta.</li>
-        <li>Posição 4: pronta resposta.</li>
-      </ul>
-      <h3>Varredura</h3>
-      <ul>
-        <li>Fatiamento (ângulo), Olhada rápida, Reflexão de imagem.</li>
-      </ul>
-      <h3>Aproximação e TAT</h3>
-      <ul>
-        <li>Ângulo 3 mais seguro.</li>
-        <li>TAT: comandante, verbalizador, segurança, revistador.</li>
-        <li>Regra dos 21 pés (6,4 m).</li>
-      </ul>
-      <h3>Busca pessoal</h3>
-      <ul>
-        <li>Ligeira, Minuciosa (4 posições), Completa.</li>
-      </ul>
-      <h3>Abordagem a veículos</h3>
-      <ul>
-        <li>Áreas: contenção, segurança, risco, aproximação, alcance, busca, custódia.</li>
-        <li>Táticas: diagonal, paralelo, cerco/bloqueio/interceptação.</li>
-        <li>Motocicletas: desligar, desembarque, capacetes mantidos.</li>
-      </ul>
-    </section>
+            <section class="card">
+                  <h2>5) Equipamentos e Uso da Força</h2>
+                  <ul>
+                        <li><span class="highlight">Itens:</span> Arma, bastão/tonfa, colete, cinto, algemas, lanterna,
+                              rádio, CFTV.</li>
+                        <li><span class="highlight">Algemas:</span> Preferência mãos para trás, ajustar, travar,
+                              vigilância.</li>
+                        <li><span class="highlight">Uso diferenciado da força:</span>
+                              <ul>
+                                    <li>Primário: presença + verbalização.</li>
+                                    <li>Secundário: controle físico, IMPO, uso dissuasivo.</li>
+                                    <li>Terciário: força letal.</li>
+                              </ul>
+                        </li>
+                        <li><span class="highlight">Fundamentos da abordagem:</span> Segurança, surpresa, rapidez, ação
+                              vigorosa, unidade de comando.</li>
+                  </ul>
+            </section>
 
-    <section class="card">
-      <h2>Resumo Final</h2>
-      <p>Base legal sólida, papéis claros, pontos sensíveis/vulneráveis, preparo mental, avaliação de risco, supremacia de força, equipamentos, algemas, uso da força e técnicas de abordagem.</p>
-    </section>
+            <section class="card">
+                  <h2>6) Técnicas e Táticas</h2>
+                  <h3>Deslocamento</h3>
+                  <ul>
+                        <li>Lento, Normal, Rápido.</li>
+                  </ul>
+                  <h3>Posturas de arma</h3>
+                  <ul>
+                        <li>Posição 1: arma localizada.</li>
+                        <li>Posição 2: guarda-baixa.</li>
+                        <li>Posição 3: guarda-alta.</li>
+                        <li>Posição 4: pronta resposta.</li>
+                  </ul>
+                  <h3>Varredura</h3>
+                  <ul>
+                        <li>Fatiamento (ângulo), Olhada rápida, Reflexão de imagem.</li>
+                  </ul>
+                  <h3>Aproximação e TAT</h3>
+                  <ul>
+                        <li>Ângulo 3 mais seguro.</li>
+                        <li>TAT: comandante, verbalizador, segurança, revistador.</li>
+                        <li>Regra dos 21 pés (6,4 m).</li>
+                  </ul>
+                  <h3>Busca pessoal</h3>
+                  <ul>
+                        <li>Ligeira, Minuciosa (4 posições), Completa.</li>
+                  </ul>
+                  <h3>Abordagem a veículos</h3>
+                  <ul>
+                        <li>Áreas: contenção, segurança, risco, aproximação, alcance, busca, custódia.</li>
+                        <li>Táticas: diagonal, paralelo, cerco/bloqueio/interceptação.</li>
+                        <li>Motocicletas: desligar, desembarque, capacetes mantidos.</li>
+                  </ul>
+            </section>
 
-    <!-- <p class="footer">&copy; 2025 CFSd Hotel</p> -->
-  </div>
+            <!-- <p class="footer">&copy; 2025 CFSd Hotel</p> -->
+      </div>
 </body>
+
 </html>
+>
